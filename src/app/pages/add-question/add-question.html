@@ -1,0 +1,56 @@
+<div class="max-w-5xl mx-auto p-6 bg-white shadow rounded">
+    <h2 class="text-xl font-bold mb-4">Thêm câu hỏi</h2>
+
+    <!-- Nội dung câu hỏi -->
+    <label class="block mb-2 font-medium">Nội dung câu hỏi</label>
+    <textarea
+        [(ngModel)]="questionText"
+        class="w-full border p-3 rounded mb-4"
+        rows="4"
+        placeholder="Nhập câu hỏi..."
+    ></textarea>
+
+    <!-- Danh sách đáp án -->
+    <h3 class="font-medium mb-2">Danh sách đáp án</h3>
+
+    @for (ans of answers; track $index) {
+    <div class="flex gap-3 mb-3 items-center">
+        <!-- Radio chọn đáp án đúng -->
+        <input
+            type="radio"
+            name="correctAnswer"
+            [checked]="ans.isCorrect"
+            (change)="markCorrect(ans.id)"
+            class="w-5 h-5"
+        />
+
+        <!-- Nội dung đáp án -->
+        <input
+            type="text"
+            [(ngModel)]="ans.text"
+            class="flex-1 border p-2 rounded"
+            placeholder="Nội dung đáp án"
+        />
+
+        <!-- Xóa đáp án -->
+
+        @if (answers.length > 1) {
+        <button class="px-3 py-1 bg-red-500 text-white rounded" (click)="removeAnswer($index)">
+            X</button
+        >}
+    </div>
+
+    }
+
+    <!-- Nút thêm đáp án -->
+    <button class="px-4 py-2 bg-gray-700 text-white rounded mb-4" (click)="addAnswer()">
+        + Thêm đáp án
+    </button>
+
+    <!-- Nút hành động -->
+    <div class="flex justify-end gap-3">
+        <button class="px-4 py-2 bg-blue-600 rounded text-white" (click)="save()">
+            Lưu câu hỏi
+        </button>
+    </div>
+</div>

@@ -10,6 +10,6 @@ import { LanguageService } from './core/services/language-service';
 })
 export class App {
     protected readonly title = signal('Trac-Nghiem-Chinh-Tri');
-    
+
     constructor(private languageService: LanguageService) {}
 }

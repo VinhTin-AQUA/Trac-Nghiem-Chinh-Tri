@@ -33,7 +33,7 @@ Safe area utilities cho toàn layout
 
 /* Main content */
 .layout main {
-    padding-top: calc(4rem + env(safe-area-inset-top)); /* 4rem là header height */
+    padding-top: calc(5rem + env(safe-area-inset-top)); /* 4rem là header height */
     padding-bottom: calc(1rem + env(safe-area-inset-bottom));
     padding-left: calc(1rem + env(safe-area-inset-left));
     padding-right: calc(1rem + env(safe-area-inset-right));

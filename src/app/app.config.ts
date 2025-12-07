@@ -22,6 +22,6 @@ export const appConfig: ApplicationConfig = {
             }),
             fallbackLang: 'vi',
             lang: 'vi',
-        })
+        }),
     ],
 };

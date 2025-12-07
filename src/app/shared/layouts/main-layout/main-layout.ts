@@ -26,11 +26,11 @@ export class MainLayout {
             },
             {
                 name: 'menuSidebar.startExam',
-                url: `/${MainRoutes.STARTEXAM}`,
+                url: `/${MainRoutes.START_EXAM}`,
             },
             {
                 name: 'menuSidebar.questionBank',
-                url: `/${MainRoutes.QUESTIONBANK}`,
+                url: `/${MainRoutes.QUESTION_BANK}`,
             },
             {
                 name: 'menuSidebar.settings',

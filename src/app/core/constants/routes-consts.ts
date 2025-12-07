@@ -4,7 +4,8 @@ export const LayoutRoutes = {
 
 export const MainRoutes = {
     HOME: 'home',
-    STARTEXAM: 'start-exam',
+    START_EXAM: 'start-exam',
     SETTINGS: 'settings',
-    QUESTIONBANK: "question-bank"
+    QUESTION_BANK: 'question-bank',
+    ADD_QUESTION: 'add-question',
 } as const;

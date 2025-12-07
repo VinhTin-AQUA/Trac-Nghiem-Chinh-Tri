@@ -4,6 +4,8 @@ import { MainRoutes } from './core/constants/routes-consts';
 import { Home } from './pages/home/home';
 import { StartExam } from './pages/start-exam/start-exam';
 import { QuestionBank } from './pages/question-bank/question-bank';
+import { AddQuestion } from './pages/add-question/add-question';
+import { Settings } from './pages/settings/settings';
 
 export const routes: Routes = [
     {
@@ -15,12 +17,20 @@ export const routes: Routes = [
                 component: Home,
             },
             {
-                path: MainRoutes.STARTEXAM,
+                path: MainRoutes.START_EXAM,
                 component: StartExam,
             },
             {
-                path: MainRoutes.QUESTIONBANK,
+                path: MainRoutes.QUESTION_BANK,
                 component: QuestionBank,
+            },
+            {
+                path: MainRoutes.ADD_QUESTION,
+                component: AddQuestion,
+            },
+            {
+                path: MainRoutes.SETTINGS,
+                component: Settings,
             },
             { path: '', redirectTo: MainRoutes.HOME, pathMatch: 'full' },
         ],
