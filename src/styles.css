@@ -1,3 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+html {
+    scrollbar-gutter: stable; /* Không dịch chuyển nội dung khi xuất hiện scrollbar */
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* hoac */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 2px;
+}
+
+/* === button === */
+
+.btn-primary {
+    @apply border cursor-pointer text-white bg-blue-600 border-gray-300 rounded-xl hover:text-blue-700 hover:bg-gray-100 active:bg-blue-600 active:text-white transition;
+}

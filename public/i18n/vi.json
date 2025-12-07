@@ -1,0 +1,11 @@
+{
+    "app": {
+        "title": "Trắc nghiệm"
+    },
+    "menuSidebar": {
+        "home": "Trang chủ",
+        "startExam": "Bắt đầu thi",
+        "settings": "Cài đặt",
+        "questionBank": "Ngân hàng câu hỏi"
+    }
+}

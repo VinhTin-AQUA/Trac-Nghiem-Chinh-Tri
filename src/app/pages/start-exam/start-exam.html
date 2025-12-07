@@ -1,0 +1,90 @@
+<div>
+    <div class="mx-auto grid grid-cols-12 gap-3 px-6">
+        <div class="col-span-9">
+            @if(questions.length > 0) {
+            <div class="mx-auto">
+                <form>
+                    @for (q of questions; track $index) {
+                    <div class="mb-6 p-4 border rounded-lg">
+                        <p class="font-semibold mb-2">{{ q.text }}</p>
+
+                        @for (a of q.answers; track $index) {
+                        <div>
+                            <label
+                                class="flex items-center gap-2 p-2 rounded cursor-pointer"
+                                [ngClass]="{
+                                    'bg-green-300': submitted && a.isCorrect,
+                                    'bg-red-300':
+                                        submitted && q.userAnswerId === a.id && !a.isCorrect
+                                }"
+                            >
+                                <input
+                                    type="radio"
+                                    [name]="'q' + q.id"
+                                    [value]="a.id"
+                                    [(ngModel)]="q.userAnswerId"
+                                    [disabled]="submitted"
+                                    class="form-radio"
+                                />
+
+                                {{ a.text }}
+                            </label>
+                        </div>
+                        }
+                    </div>
+                    } @if (!submitted) {
+                    <button type="button" class="px-4 py-2 btn-primary" (click)="submit()">
+                        Nộp bài</button
+                    >}
+                </form>
+
+                <!-- Hiển thị kết quả -->
+                @if(submitted){
+                <div class="mt-6 p-4 bg-gray-100 rounded">
+                    <p class="text-lg font-semibold">Kết quả:</p>
+                    <p>
+                        Điểm: <strong>{{ score }}/10</strong>
+                    </p>
+                    <p>
+                        Số câu đúng: <strong>{{ correctCount }}</strong> / {{ questions.length }}
+                    </p>
+                    <div class="flex">
+                        <button class="w-full p-3 btn-primary">Thi lại câu hỏi cũ</button>
+                        <button class="w-full p-3 btn-primary">Thi lại với câu hỏi mới</button>
+                    </div>
+                </div>
+                }
+            </div>
+            } @else {
+            <div class="text-center text-2xl font-semibold">
+                <p>Không có câu hỏi nào</p>
+            </div>
+            }
+        </div>
+
+        <!-- CẤU HÌNH BÀI THI -->
+        <div class="col-span-3 bg-white shadow rounded-xl p-6 h-fit">
+            <h2 class="text-2xl font-bold mb-4">Nhận câu hỏi</h2>
+
+            <!-- <div class="mb-4">
+            <label class="font-medium text-gray-700">Thời gian thi (phút)</label>
+            <input type="number" class="mt-1 w-full border rounded-lg p-2" />
+        </div> -->
+
+            <div class="mb-4">
+                <label class="font-medium text-gray-700">Số lượng câu hỏi</label>
+                <input type="number" class="mt-1 w-full border rounded-lg p-2" />
+            </div>
+
+            <!-- <div class="mb-4">
+            <label class="font-medium text-gray-700">Chế độ thi</label>
+            <select class="mt-1 w-full border rounded-lg p-2">
+                <option value="practice">Thi thử (không tính giờ)</option>
+                <option value="exam">Thi thật (có tính giờ)</option>
+            </select>
+        </div> -->
+
+            <button class="w-full p-3 btn-primary">Random</button>
+        </div>
+    </div>
+</div>
