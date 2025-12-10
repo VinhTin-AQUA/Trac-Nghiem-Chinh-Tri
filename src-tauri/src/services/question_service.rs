@@ -1,65 +1,35 @@
-use crate::{
-    services::{db_instance, DatabaseService},
-    states::AppState,
-};
-use tauri::{Manager, Window};
+use std::sync::Arc;
+
+use crate::services::DatabaseService;
+use anyhow::{anyhow, Result};
 use tokio::sync::Mutex;
 
-pub struct QuestionService;
+pub struct QuestionService {
+    db: Arc<Mutex<DatabaseService>>,
+}
 
 impl QuestionService {
-    pub async fn create_table(window: &Window) -> turso::Result<()> {
-        let db = db_instance(); // lấy Arc<DatabaseService>
+    pub fn new(db: Arc<Mutex<DatabaseService>>) -> Self {
+        Self { db }
+    }
+
+    pub async fn query_questions(&self) -> Result<()> {
+        let sql = "SELECT id, title, content FROM questions ORDER BY id DESC";
+        let db = self.db.lock().await;
         let conn = db.get_connection().await;
 
-        conn.execute(
-            r#"CREATE TABLE IF NOT EXISTS students (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                age INTEGER NOT NULL
-            )"#,
-            (),
-        )
-        .await?;
+        let mut rows = conn
+            .query(sql, [0])
+            .await
+            .map_err(|e| anyhow!("Query failed: {}", e))?;
+
+        // doc ket qua
+        while let Some(row) = rows.next().await? {
+            println!("id = {:#?}", row.get_value(0)?);
+            println!("name = {:#?}", row.get_value(1)?);
+            println!("age = {:#?}", row.get_value(2)?);
+        }
 
         Ok(())
     }
-
-    // pub async fn create(name: &str, age: i32) -> turso::Result<i64> {
-    //     let db = DatabaseService::instance().await.lock().await;
-    //     let conn = db.connect()?;
-
-    //     let _ = conn
-    //         .execute(
-    //             "INSERT INTO students (name, age) VALUES (?1, ?2)",
-    //             (name, age),
-    //         )
-    //         .await?;
-
-    //     let mut rows = conn.query("SELECT last_insert_rowid()", ()).await?;
-    //     if let Some(row) = rows.next().await? {
-    //         let id: i64 = row.get_value(0)?;
-    //         Ok(id)
-    //     } else {
-    //         Ok(0)
-    //     }
-    // }
-
-    // pub async fn get_all() -> turso::Result<Vec<Question>> {
-    //     let db = DatabaseService::instance().await.lock().await;
-    //     let conn = db.connect()?;
-
-    //     let mut rows = conn.query("SELECT id, name, age FROM students", ()).await?;
-    //     let mut result = vec![];
-
-    //     while let Some(row) = rows.next().await? {
-    //         result.push(Question {
-    //             id: row.get_value(0)?,
-    //             name: row.get_value(1)?,
-    //             age: row.get_value(2)?,
-    //         });
-    //     }
-
-    //     Ok(result)
-    // }
 }

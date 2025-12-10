@@ -1,7 +1,4 @@
 use anyhow::{anyhow, Result};
-use once_cell::sync::Lazy;
-use std::sync::Arc;
-use tokio::sync::Mutex;
 use turso::{Builder, Connection, Row};
 
 pub struct DatabaseService {
@@ -9,9 +6,9 @@ pub struct DatabaseService {
 }
 
 impl DatabaseService {
-    async fn new() -> Result<Self> {
-        // 🟢 Pure async, không blocking
-        let db = Builder::new_local("my-DatabaseService.db")
+    pub async fn new() -> Result<Self> {
+        // Pure async, không blocking
+        let db = Builder::new_local("my-db.db")
             .build()
             .await
             .map_err(|e| anyhow!("Failed to build database: {}", e))?;
@@ -49,20 +46,10 @@ impl DatabaseService {
         Ok(DatabaseService { connection: conn })
     }
 
-    // 🔵 Public method để truy cập connection
     pub async fn get_connection(&self) -> &Connection {
         &self.connection
     }
 
-    // 🔵 Helper method để execute query
-    // pub async fn execute(&self, sql: &str, params: Vec<turso::Value>) -> Result<usize> {
-    //     let conn = self.get_connection().await;
-    //     conn.execute(sql, params)
-    //         .await
-    //         .map_err(|e| anyhow!("Execute failed: {}", e))
-    // }
-
-    // 🔵 Helper method để query rows
     pub async fn query(&self, sql: &str, params: Vec<turso::Value>) -> Result<Vec<Row>> {
         let conn = self.get_connection().await;
         let mut rows = conn
@@ -87,15 +74,4 @@ impl DatabaseService {
         let mut rows = self.query(sql, params).await?;
         Ok(rows.pop())
     }
-}
-
-// 🔵 Singleton instance - CẦN XỬ LÝ LỖI
-static DB_INSTANCE: Lazy<Arc<DatabaseService>> = Lazy::new(|| {
-    let rt = tokio::runtime::Runtime::new().unwrap();
-    let db = rt.block_on(DatabaseService::new()).unwrap();
-    Arc::new(db)
-});
-
-pub fn db_instance() -> Arc<DatabaseService> {
-    Arc::clone(&DB_INSTANCE)
 }
