@@ -1,18 +1,17 @@
 mod commands;
-use std::sync::Arc;
-
 use commands::*;
-
+use std::sync::Arc;
 mod services;
 use services::*;
-
 mod models;
-
 mod states;
 use states::*;
-
 use tauri::Manager;
 use tokio::sync::Mutex;
+mod constants;
+mod bootstrapper;
+
+use bootstrapper::*;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -26,6 +25,8 @@ pub fn run() {
                         .build(),
                 )?;
             }
+
+            init();
 
             // block_on để chạy async trong setup
             let db_service =
