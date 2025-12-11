@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use crate::services::DatabaseService;
+use crate::{models::AddQuestion, services::DatabaseService};
 use anyhow::{anyhow, Result};
 use tokio::sync::Mutex;
 
@@ -11,6 +11,19 @@ pub struct QuestionService {
 impl QuestionService {
     pub fn new(db: Arc<Mutex<DatabaseService>>) -> Self {
         Self { db }
+    }
+
+    pub async fn add_question(&self, new_question: AddQuestion) -> Result<u64> {
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        let t = conn.execute(
+            "INSERT INTO questions (content) VALUES (?1)",
+            [new_question.content],
+        )
+        .await?;
+
+        Ok(t)
     }
 
     pub async fn query_questions(&self) -> Result<()> {

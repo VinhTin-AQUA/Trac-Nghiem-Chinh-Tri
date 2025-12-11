@@ -1,0 +1,30 @@
+import { Injectable } from '@angular/core';
+import { invoke } from '@tauri-apps/api/core';
+import { DialogService } from './dialog-service';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class TauriCommandService {
+    public static readonly ADD_QUESTION_COMMAND = 'add_question';
+    public static readonly ADD_ANSWERS_COMMAND = 'add_answers';
+    
+
+    constructor(private dialogService: DialogService) {}
+
+    async invokeCommand<T>(cmd: string, params: any): Promise<T | null> {
+        try {
+            this.dialogService.showLoadingDialog(true);
+            const response = await invoke<T>(cmd, params);
+            this.dialogService.showLoadingDialog(false);
+
+            return response;
+        } catch (e) {
+            alert(e);
+            console.log(e);
+            this.dialogService.showLoadingDialog(false);
+
+            return null;
+        }
+    }
+}

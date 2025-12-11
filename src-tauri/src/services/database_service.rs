@@ -29,7 +29,7 @@ impl DatabaseService {
         conn.execute(
             r#"
                     CREATE TABLE IF NOT EXISTS questions (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                         content TEXT NOT NULL
                     );
                 "#,
@@ -42,10 +42,10 @@ impl DatabaseService {
         conn.execute(
             r#"
                     CREATE TABLE IF NOT EXISTS answers (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        question_id INT NOT NULL,
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                         content TEXT NOT NULL,
-                        is_correct BOOLEAN DEFAULT FALSE
+                        is_correct BOOLEAN DEFAULT 0,
+                        question_id INTEGER NOT NULL
                     );
                 "#,
             (),
@@ -58,6 +58,10 @@ impl DatabaseService {
 
     pub async fn get_connection(&self) -> &Connection {
         &self.connection
+    }
+
+    pub async fn get_connection_mut(&mut self) -> &mut Connection {
+        &mut self.connection
     }
 
     pub async fn query(&self, sql: &str, params: Vec<turso::Value>) -> Result<Vec<Row>> {

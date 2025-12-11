@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TauriCommandService } from '../../core/services/tauri-command-service';
+import { AddNewQuestion } from './models/add-new-question.model';
 
 @Component({
     selector: 'app-add-question',
@@ -10,10 +12,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class AddQuestion {
     questionText = '';
-
     answers = [{ id: Date.now(), text: '', isCorrect: false }];
 
-    // thêm đáp án
+    constructor(private tauriCommandService: TauriCommandService) {}
+
     addAnswer() {
         this.answers.push({
             id: Date.now() + Math.random(),
@@ -49,15 +51,16 @@ export class AddQuestion {
             return;
         }
 
-        const newQuestion = {
-            id: Date.now(),
-            text: this.questionText,
-            answers: this.answers,
-        };
+        const newQuestion: AddNewQuestion = { content: this.questionText };
 
         console.log('Câu hỏi đã thêm:', newQuestion);
 
-        alert('Thêm câu hỏi thành công!');
+        const r = this.tauriCommandService.invokeCommand<number>(
+            TauriCommandService.ADD_QUESTION_COMMAND,
+            {newQuestion: newQuestion}
+        );
+
+        console.log(r);
 
         // Reset form
         this.questionText = '';

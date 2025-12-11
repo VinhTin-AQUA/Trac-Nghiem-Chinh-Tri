@@ -1,5 +1,4 @@
 mod commands;
-use commands::*;
 use std::sync::Arc;
 mod services;
 use services::*;
@@ -8,10 +7,10 @@ mod states;
 use states::*;
 use tauri::Manager;
 use tokio::sync::Mutex;
-mod constants;
 mod bootstrapper;
-
+mod constants;
 use bootstrapper::*;
+use commands::*;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -33,16 +32,19 @@ pub fn run() {
                 tauri::async_runtime::block_on(async { DatabaseService::new().await.unwrap() });
             let db_service = Arc::new(Mutex::new(db_service));
             let question_service = Arc::new(Mutex::new(QuestionService::new(db_service.clone())));
+            let answer_service = Arc::new(Mutex::new(AnswerService::new(db_service.clone())));
 
             let state = AppState {
                 db_service,
                 question_service,
+                answer_service,
             };
 
             app.manage(Arc::new(state));
 
             Ok(())
         })
+        .invoke_handler(tauri::generate_handler![add_question, add_answers])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
