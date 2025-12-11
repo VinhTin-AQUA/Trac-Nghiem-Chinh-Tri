@@ -13,7 +13,7 @@ impl QuestionService {
         Self { db }
     }
 
-    pub async fn add_question(&self, new_question: AddQuestion) -> Result<u64> {
+    pub async fn add_question(&self, new_question: AddQuestion) -> Result<i64> {
         let db = self.db.lock().await;
         let conn = db.get_connection().await;
 
@@ -23,7 +23,9 @@ impl QuestionService {
         )
         .await?;
 
-        Ok(t)
+        let last_insert_rowid = conn.last_insert_rowid();
+
+        Ok(last_insert_rowid)
     }
 
     pub async fn query_questions(&self) -> Result<()> {

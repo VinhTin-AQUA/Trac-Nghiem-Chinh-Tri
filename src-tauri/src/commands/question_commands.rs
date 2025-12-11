@@ -6,7 +6,7 @@ use tauri::{command, State};
 pub async fn add_question(
     state: State<'_, Arc<AppState>>,
     new_question: AddQuestion,
-) -> Result<u64, String> {
+) -> Result<i64, String> {
     let question_service = &state.question_service;
 
     let r = question_service
