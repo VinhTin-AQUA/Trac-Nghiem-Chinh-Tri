@@ -1,4 +1,7 @@
+use std::path::PathBuf;
+
 use anyhow::{anyhow, Result};
+use dirs;
 use turso::{Builder, Connection, Row};
 
 pub struct DatabaseService {
@@ -7,8 +10,14 @@ pub struct DatabaseService {
 
 impl DatabaseService {
     pub async fn new() -> Result<Self> {
+        let data_local_dir = dirs::data_local_dir().unwrap_or(PathBuf::from("./db"));
+        let db_path = data_local_dir
+            .join("com.newtun.tracnghiemchinhtri")
+            .join("db")
+            .join("my-db.db");
+
         // Pure async, không blocking
-        let db = Builder::new_local("my-db.db")
+        let db = Builder::new_local(db_path.to_string_lossy().to_string().as_str())
             .build()
             .await
             .map_err(|e| anyhow!("Failed to build database: {}", e))?;
