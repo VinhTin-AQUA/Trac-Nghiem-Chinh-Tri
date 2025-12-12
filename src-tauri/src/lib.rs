@@ -44,7 +44,12 @@ pub fn run() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![add_question, add_answers])
+        .invoke_handler(tauri::generate_handler![
+            add_question,
+            add_answers,
+            get_all_questions,
+            get_answers_by_question_id
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

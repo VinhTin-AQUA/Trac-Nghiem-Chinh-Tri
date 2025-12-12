@@ -19,7 +19,7 @@
         <input
             type="radio"
             name="correctAnswer"
-            [checked]="ans.isCorrect"
+            [checked]="ans.is_correct"
             (change)="markCorrect(ans.id)"
             class="w-5 h-5"
         />
@@ -27,7 +27,7 @@
         <!-- Nội dung đáp án -->
         <input
             type="text"
-            [(ngModel)]="ans.text"
+            [(ngModel)]="ans.content"
             class="flex-1 border p-2 rounded"
             placeholder="Nội dung đáp án"
         />
