@@ -56,8 +56,8 @@ jobs:
 
             - name: Rename exe file
               run: Rename-Item `
-                  -Path "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe" `
-                  -NewName "${{ env.EXE_FILE_NAME }}"
+                  -Path "./src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/Trac nghiem chinh tri_1.0.0_x64-setup.exe" `
+                  -NewName "./src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/${{ env.EXE_FILE_NAME }}"
               shell: powershell
 
             - name: Remove old tag if exists
@@ -83,7 +83,6 @@ jobs:
               shell: bash
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  TAG_NAME: ${{ env.TAG_NAME }}
               run: |
                   if gh release view "$TAG_NAME" >/dev/null 2>&1; then
                     gh release delete "$TAG_NAME" -y
