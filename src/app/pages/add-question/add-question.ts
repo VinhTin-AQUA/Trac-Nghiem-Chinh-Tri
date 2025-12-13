@@ -5,10 +5,11 @@ import { TauriCommandService } from '../../core/services/tauri-command-service';
 import { AddNewQuestion } from './models/add-new-question.model';
 import { AddNewAnswer } from './models/add-new-answer';
 import { ToastStore } from '../../shared/stores/toast.store';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-add-question',
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, TranslatePipe],
     templateUrl: './add-question.html',
     styleUrl: './add-question.css',
 })

@@ -1,10 +1,14 @@
 <div class="max-w-4xl mx-auto p-8">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">Cài đặt hệ thống</h1>
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">
+        {{ 'settings.title' | translate }}
+    </h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- IMPORT -->
         <div class="p-6 bg-white shadow rounded-xl">
-            <h2 class="text-xl font-semibold mb-3 text-gray-800">Import dữ liệu</h2>
+            <h2 class="text-xl font-semibold mb-3 text-gray-800">
+                {{ 'settings.importTitle' | translate }}
+            </h2>
 
             <input
                 type="file"
@@ -14,31 +18,36 @@
             />
 
             <button class="w-full mt-4 px-4 py-2 btn-primary" (click)="importData()">
-                Nhập câu hỏi
+                {{ 'settings.importButton' | translate }}
             </button>
         </div>
 
         <!-- EXPORT -->
         <div class="p-6 bg-white shadow rounded-xl">
-            <h2 class="text-xl font-semibold mb-3 text-gray-800">Export dữ liệu</h2>
+            <h2 class="text-xl font-semibold mb-3 text-gray-800">
+                {{ 'settings.exportTitle' | translate }}
+            </h2>
 
             <button class="w-full px-4 py-2 btn-primary" (click)="exportData()">
-                Xuất câu hỏi
+                {{ 'settings.exportButton' | translate }}
             </button>
         </div>
 
         <!-- RESET DATA -->
         <div class="p-6 bg-white shadow rounded-xl md:col-span-2">
-            <h2 class="text-xl font-semibold mb-3 text-gray-800">Xóa toàn bộ dữ liệu</h2>
+            <h2 class="text-xl font-semibold mb-3 text-gray-800">
+                {{ 'settings.resetTitle' | translate }}
+            </h2>
+
             <p class="text-gray-600 mb-4">
-                Thao tác này sẽ xóa vĩnh viễn toàn bộ ngân hàng câu hỏi. Không thể hoàn tác!
+                {{ 'settings.resetDescription' | translate }}
             </p>
 
             <button
                 class="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition"
                 (click)="resetAll()"
             >
-                Xóa tất cả dữ liệu
+                {{ 'settings.resetButton' | translate }}
             </button>
         </div>
     </div>

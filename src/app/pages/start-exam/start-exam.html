@@ -8,26 +8,26 @@
                     @for (q of questions; track $index) {
                     <div class="mb-6 p-5 border rounded-xl shadow-sm bg-white">
                         <!-- Question text -->
-                        <p class="font-semibold text-lg mb-3">{{ q.text }}</p>
+                        <p class="font-semibold text-lg mb-3">{{ q.content }}</p>
 
                         <!-- ANSWERS -->
                         @for (a of q.answers; track $index) {
                         <label
                             class="flex items-center gap-3 p-2 mb-2 rounded cursor-pointer transition"
                             [ngClass]="{
-                                'bg-green-300': submitted && a.isCorrect,
-                                'bg-red-300': submitted && q.userAnswerId === a.id && !a.isCorrect
+                                'bg-green-300': submitted && a.is_correct,
+                                'bg-red-300': submitted && q.id === a.id && !a.is_correct
                             }"
                         >
                             <input
                                 type="radio"
                                 [name]="'q' + q.id"
                                 [value]="a.id"
-                                [(ngModel)]="q.userAnswerId"
+                                [(ngModel)]="q.id"
                                 [disabled]="submitted"
                                 class="h-4 w-4"
                             />
-                            {{ a.text }}
+                            {{ a.content }}
                         </label>
                         }
                     </div>
@@ -40,7 +40,7 @@
                         class="px-6 py-3 btn-primary text-lg mt-4"
                         (click)="submit()"
                     >
-                        Nộp bài
+                        {{ 'startExam.submit' | translate }}
                     </button>
                     }
                 </form>
@@ -48,21 +48,29 @@
                 <!-- KẾT QUẢ -->
                 @if (submitted) {
                 <div class="mt-6 p-5 bg-gray-100 rounded-xl shadow">
-                    <p class="text-xl font-semibold mb-2">Kết quả bài thi</p>
+                    <p class="text-xl font-semibold mb-2">
+                        {{ 'startExam.resultTitle' | translate }}
+                    </p>
 
                     <p class="text-gray-700">
-                        Điểm: <strong class="text-blue-600">{{ score }}/10</strong>
+                        {{ 'startExam.score' | translate }}:
+                        <strong class="text-blue-600">{{ score }}/10</strong>
                     </p>
+
                     <p class="text-gray-700">
-                        Số câu đúng:
+                        {{ 'startExam.correctCount' | translate }}:
                         <strong class="text-green-600">{{ correctCount }}</strong>
                         / {{ questions.length }}
                     </p>
 
                     <div class="grid grid-cols-2 gap-4 mt-4">
-                        <button class="w-full p-3 btn-primary">Thi lại câu hỏi cũ</button>
+                        <button class="w-full p-3 btn-primary">
+                            {{ 'startExam.retryOld' | translate }}
+                        </button>
 
-                        <button class="w-full p-3 btn-primary">Thi lại với câu hỏi mới</button>
+                        <button class="w-full p-3 btn-primary">
+                            {{ 'startExam.retryNew' | translate }}
+                        </button>
                     </div>
                 </div>
                 }
@@ -70,21 +78,27 @@
 
             } @else {
             <div class="text-center text-2xl font-semibold py-20 text-gray-500">
-                Không có câu hỏi nào
+                {{ 'startExam.noQuestion' | translate }}
             </div>
             }
         </div>
 
         <!-- SIDEBAR CẤU HÌNH BÀI THI -->
         <div class="col-span-3 bg-white shadow-lg rounded-2xl p-6 h-fit">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">Nhận câu hỏi</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                {{ 'startExam.sidebarTitle' | translate }}
+            </h2>
 
             <div class="mb-5">
-                <label class="font-medium text-gray-700">Số lượng câu hỏi</label>
+                <label class="font-medium text-gray-700">
+                    {{ 'startExam.questionCount' | translate }}
+                </label>
                 <input type="number" class="mt-1 w-full border rounded-lg p-2" />
             </div>
 
-            <button class="w-full p-3 btn-primary text-lg">Random</button>
+            <button class="w-full p-3 btn-primary text-lg">
+                {{ 'startExam.random' | translate }}
+            </button>
         </div>
     </div>
 </div>

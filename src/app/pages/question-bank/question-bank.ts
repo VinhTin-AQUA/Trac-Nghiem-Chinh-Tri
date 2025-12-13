@@ -3,13 +3,14 @@ import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MainRoutes } from '../../core/constants/routes-consts';
 import { RouterLink } from '@angular/router';
-import { Question } from './models/question';
 import { TauriCommandService } from '../../core/services/tauri-command-service';
-import { Answer } from './models/answer';
+import { TranslatePipe } from '@ngx-translate/core';
+import { Question } from '../../core/models/question';
+import { Answer } from '../../core/models/answer';
 
 @Component({
     selector: 'app-question-bank',
-    imports: [CommonModule, FormsModule, RouterLink],
+    imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
     templateUrl: './question-bank.html',
     styleUrl: './question-bank.css',
 })

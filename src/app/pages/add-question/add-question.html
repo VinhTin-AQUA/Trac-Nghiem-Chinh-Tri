@@ -7,11 +7,11 @@
         [(ngModel)]="questionText"
         class="w-full border p-3 rounded mb-4"
         rows="4"
-        placeholder="Nhập câu hỏi..."
+        [placeholder]="'add-question.inputQuestion' | translate"
     ></textarea>
 
     <!-- Danh sách đáp án -->
-    <h3 class="font-medium mb-2">Danh sách đáp án</h3>
+    <h3 class="font-medium mb-2">{{ 'add-question.answerList' | translate }}</h3>
 
     @for (ans of answers; track $index) {
     <div class="flex gap-3 mb-3 items-center">
@@ -29,7 +29,7 @@
             type="text"
             [(ngModel)]="ans.content"
             class="flex-1 border p-2 rounded"
-            placeholder="Nội dung đáp án"
+            [placeholder]="'add-question.answerContent' | translate"
         />
 
         <!-- Xóa đáp án -->
@@ -44,13 +44,13 @@
 
     <!-- Nút thêm đáp án -->
     <button class="px-4 py-2 bg-gray-700 text-white rounded mb-4" (click)="addAnswer()">
-        + Thêm đáp án
+        {{ 'add-question.addAnswer' | translate }}
     </button>
 
     <!-- Nút hành động -->
     <div class="flex justify-end gap-3">
         <button class="px-4 py-2 bg-blue-600 rounded text-white" (click)="save()">
-            Lưu câu hỏi
+            {{ 'add-question.saveQuestion' | translate }}
         </button>
     </div>
 </div>
