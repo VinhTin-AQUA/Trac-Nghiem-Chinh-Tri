@@ -80,17 +80,17 @@ jobs:
                   git push origin "${{ env.TAG_NAME }}"
 
             - name: Remove old release if exists
-              shell: pwsh
+              shell: bash
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TAG_NAME: ${{ env.TAG_NAME }}
               run: |
-                  gh release view $env:TAG_NAME 2>$null
-                  if ($LASTEXITCODE -eq 0) {
-                    gh release delete $env:TAG_NAME -y
-                    Write-Host "Deleted release for tag $env:TAG_NAME"
-                  } else {
-                    Write-Host "Release for tag $env:TAG_NAME does not exist"
-                  }
+                  if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+                    gh release delete "$TAG_NAME" -y
+                    echo "Deleted release for tag $TAG_NAME"
+                  else
+                    echo "Release for tag $TAG_NAME does not exist"
+                  fi
 
             - name: Publish
               uses: softprops/action-gh-release@v1
