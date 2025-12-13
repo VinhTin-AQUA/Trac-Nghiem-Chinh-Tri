@@ -81,15 +81,15 @@ jobs:
 
             - name: Remove old release if exists
               shell: powershell
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  $release = "${{ env.RELEASE_NAME }}"
-                  $env:GITHUB_TOKEN = "${{ secrets.GITHUB_TOKEN }}"
-
-                  if (gh release view $release --json name -q name > $null 2>&1) {
-                      Write-Host "Deleting old release..."
-                      gh release delete $release -y
+                  gh release view "${{ env.TAG_NAME }}" 2>$null
+                  if ($LASTEXITCODE -eq 0) {
+                    gh release delete "${{ env.TAG_NAME }}" -y
+                    Write-Host "Deleted release "${{ env.TAG_NAME }}""
                   } else {
-                      Write-Host "No old release found."
+                    Write-Host "Release "${{ env.TAG_NAME }}" does not exist"
                   }
 
             - name: Publish
