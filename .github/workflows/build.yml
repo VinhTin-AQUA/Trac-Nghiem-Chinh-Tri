@@ -15,8 +15,9 @@ env:
     EXE_FILE_NAME: 'trac-nghiem-chinh-tri_v1.0.0_portable.exe'
 
 jobs:
-    publish-android:
-        runs-on: ubuntu-latest
+    publish-windows:
+        runs-on: windows-latest
+
         permissions:
             contents: write
         steps:
