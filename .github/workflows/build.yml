@@ -28,11 +28,6 @@ jobs:
                   choco install gh --version=2.83.2 -y
               shell: powershell
 
-            - name: log workspace
-              run: |
-                  Write-Host "${{ github.workspace }}"
-              shell: powershell
-
             - name: setup node
               uses: actions/setup-node@v4
               with:
@@ -60,16 +55,15 @@ jobs:
               run: npm run tauri build -- --no-bundle --target x86_64-pc-windows-msvc
 
             - name: Rename exe file
-              run: |
-                  Write-Host "${{ github.workspace }}"
-                  $oldPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe"
-                  $newPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/${{ env.EXE_FILE_NAME }}"
-                  Rename-Item -Path $oldPath -NewName $newPath
               shell: powershell
+              run: |
+                  $dir = "./src-tauri/target/x86_64-pc-windows-msvc/release"
+                  Rename-Item "$dir/app.exe" $env:EXE_FILE_NAME
 
             - name: Remove old tag if exists
+              shell: powershell
               run: |
-                  $tag = "${{ env.TAG_NAME }}"
+                  $tag = $env:TAG_NAME
                   $tags = git ls-remote --tags origin | ForEach-Object { $_.Split("`t")[1] }
                   if ($tags -contains "refs/tags/$tag") {
                       Write-Host "Deleting old tag..."
@@ -77,14 +71,14 @@ jobs:
                   } else {
                       Write-Host "No old tag found."
                   }
-              shell: powershell
 
             - name: Create Tag
+              shell: powershell
               run: |
                   git config user.name "github-actions"
                   git config user.email "github-actions@github.com"
-                  git tag "${{ env.TAG_NAME }}"
-                  git push origin "${{ env.TAG_NAME }}"
+                  git tag $env:TAG_NAME
+                  git push origin $env:TAG_NAME
 
             - name: Remove old release if exists
               shell: bash
