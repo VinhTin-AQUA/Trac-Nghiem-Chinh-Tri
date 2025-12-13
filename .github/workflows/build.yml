@@ -85,7 +85,7 @@ jobs:
                   $release = "${{ env.RELEASE_NAME }}"
                   $env:GITHUB_TOKEN = "${{ secrets.GITHUB_TOKEN }}"
 
-                  if (gh release view $release -q name > $null 2>&1) {
+                  if (gh release view $release --json name -q name > $null 2>&1) {
                       Write-Host "Deleting old release..."
                       gh release delete $release -y
                   } else {
