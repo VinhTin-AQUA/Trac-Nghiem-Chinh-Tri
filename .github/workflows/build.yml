@@ -25,9 +25,8 @@ jobs:
 
             - name: Setup GitHub CLI
               run: |
-                choco install gh --version=2.83.2 -y
+                  choco install gh --version=2.83.2 -y
               shell: powershell
-
 
             - name: setup node
               uses: actions/setup-node@v4
@@ -57,22 +56,21 @@ jobs:
 
             - name: Rename exe file
               run: Rename-Item `
-                    -Path "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe" `
-                    -NewName "${{ env.EXE_FILE_NAME }}"
+                  -Path "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe" `
+                  -NewName "${{ env.EXE_FILE_NAME }}"
               shell: powershell
 
             - name: Remove old tag if exists
               run: |
-                $tag = "${{ env.TAG_NAME }}"
-                $tags = git ls-remote --tags origin | ForEach-Object { $_.Split("`t")[1] }
-                if ($tags -contains "refs/tags/$tag") {
-                    Write-Host "Deleting old tag..."
-                    git push origin :refs/tags/$tag
-                } else {
-                    Write-Host "No old tag found."
-                }
+                  $tag = "${{ env.TAG_NAME }}"
+                  $tags = git ls-remote --tags origin | ForEach-Object { $_.Split("`t")[1] }
+                  if ($tags -contains "refs/tags/$tag") {
+                      Write-Host "Deleting old tag..."
+                      git push origin :refs/tags/$tag
+                  } else {
+                      Write-Host "No old tag found."
+                  }
               shell: powershell
-
 
             - name: Create Tag
               run: |
@@ -84,17 +82,15 @@ jobs:
             - name: Remove old release if exists
               shell: powershell
               run: |
-                $release = "${{ env.RELEASE_NAME }}"
-                $env:GITHUB_TOKEN = "${{ secrets.GITHUB_TOKEN }}"
+                  $release = "${{ env.RELEASE_NAME }}"
+                  $env:GITHUB_TOKEN = "${{ secrets.GITHUB_TOKEN }}"
 
-                try {
-                    gh release view $release -q name > $null 2>&1
-                    Write-Host "Deleting old release..."
-                    gh release delete $release -y
-                } catch {
-                    Write-Host "No old release found."
-                }
-
+                  if (gh release view $release -q name > $null 2>&1) {
+                      Write-Host "Deleting old release..."
+                      gh release delete $release -y
+                  } else {
+                      Write-Host "No old release found."
+                  }
 
             - name: Publish
               uses: softprops/action-gh-release@v1
