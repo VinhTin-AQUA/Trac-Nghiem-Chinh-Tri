@@ -28,6 +28,11 @@ jobs:
                   choco install gh --version=2.83.2 -y
               shell: powershell
 
+            - name: log workspace
+              run: |
+                  Write-Host "${{ github.workspace }}"
+              shell: powershell
+
             - name: setup node
               uses: actions/setup-node@v4
               with:
@@ -56,8 +61,10 @@ jobs:
 
             - name: Rename exe file
               run: |
-                  $dir = "./src-tauri/target/x86_64-pc-windows-msvc/release/"
-                  Rename-Item -Path "$dir/app.exe" -NewName "${{ env.EXE_FILE_NAME }}"
+                  Write-Host "${{ github.workspace }}"
+                  $oldPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe"
+                  $newPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/${{ env.EXE_FILE_NAME }}"
+                  Rename-Item -Path $oldPath -NewName $newPath
               shell: powershell
 
             - name: Remove old tag if exists
