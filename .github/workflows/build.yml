@@ -55,9 +55,10 @@ jobs:
               run: npm run tauri build -- --no-bundle --target x86_64-pc-windows-msvc
 
             - name: Rename exe file
-              run: Rename-Item `
-                  -Path "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe" `
-                  -NewName "./src-tauri/target/x86_64-pc-windows-msvc/release/${{ env.EXE_FILE_NAME }}"
+              run: |
+                  $oldPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe"
+                  $newPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/${{ env.EXE_FILE_NAME }}"
+                  Rename-Item -Path $oldPath -NewName $newPath
               shell: powershell
 
             - name: Remove old tag if exists
