@@ -1,6 +1,9 @@
 use std::sync::Arc;
 
-use crate::{models::{AddQuestion, Question}, services::DatabaseService};
+use crate::{
+    models::{AddQuestion, Question},
+    services::DatabaseService,
+};
 use anyhow::{anyhow, Result};
 use tokio::sync::Mutex;
 
@@ -17,11 +20,12 @@ impl QuestionService {
         let db = self.db.lock().await;
         let conn = db.get_connection().await;
 
-        let t = conn.execute(
-            "INSERT INTO questions (content) VALUES (?1)",
-            [new_question.content],
-        )
-        .await?;
+        let t = conn
+            .execute(
+                "INSERT INTO questions (content) VALUES (?1)",
+                [new_question.content],
+            )
+            .await?;
 
         let last_insert_rowid = conn.last_insert_rowid();
 
@@ -46,9 +50,18 @@ impl QuestionService {
                 id: row.get::<i64>(0).unwrap_or(0),
                 content: row.get::<String>(1).unwrap_or("".to_string()),
             });
-
         }
 
         Ok(questions)
+    }
+
+    pub async fn delete_question_by_id(&self, question_id: i64) -> Result<bool> {
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        conn.execute("DELETE FROM questions WHERE id = (?1);", [question_id])
+            .await?;
+
+        Ok(true)
     }
 }

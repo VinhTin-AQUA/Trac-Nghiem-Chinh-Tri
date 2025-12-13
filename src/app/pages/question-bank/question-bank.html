@@ -63,7 +63,7 @@
 
                         <button
                             class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-sm transition"
-                            (click)="delete(q)"
+                            (click)="onShowDelete(q)"
                         >
                             Xóa
                         </button>
@@ -123,3 +123,12 @@
     </div>
     }
 </div>
+
+@if(isShowQuestionDialog()){
+<app-question-cancel-dialog
+    (close)="onShowQuestionDialogClose($event)"
+    [isSuccess]="false"
+    [message]="'deleteQuestionDialog.message'"
+    [title]="'deleteQuestionDialog.title'"
+></app-question-cancel-dialog>
+}

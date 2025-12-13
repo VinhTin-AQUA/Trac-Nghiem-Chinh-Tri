@@ -38,3 +38,20 @@ pub async fn get_answers_by_question_id(
 
     r
 }
+
+#[command]
+pub async fn delete_answers_by_question_id(
+    state: State<'_, Arc<AppState>>,
+    question_id: i64,
+) -> Result<bool, String> {
+    let question_service = &state.answer_service;
+
+    let r = question_service
+        .lock()
+        .await
+        .delete_answers_by_question_id(question_id)
+        .await
+        .map_err(|e| e.to_string());
+
+    r
+}

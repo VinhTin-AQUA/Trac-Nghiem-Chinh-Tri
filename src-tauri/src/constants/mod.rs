@@ -12,5 +12,5 @@ pub mod app_folder_constants {
 pub mod database_constants {
     pub const DB_FOLDER: &str = "db";
     pub const DB_NAME: &str = "db.db";
-    pub  const DB_PATH: &str = "./db/db.db";
+    pub const DB_PATH: &str = "./db/db.db";
 }

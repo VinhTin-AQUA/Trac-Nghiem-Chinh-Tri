@@ -63,4 +63,17 @@ impl AnswerService {
 
         Ok(answrs)
     }
+
+    pub async fn delete_answers_by_question_id(&self, question_id: i64) -> Result<bool> {
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        conn.execute(
+            "DELETE FROM answers WHERE question_id = (?1);",
+            [question_id],
+        )
+        .await?;
+
+        Ok(true)
+    }
 }

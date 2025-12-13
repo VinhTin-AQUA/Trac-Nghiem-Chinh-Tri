@@ -43,15 +43,23 @@
         "resetButton": "Xóa tất cả dữ liệu"
     },
     "startExam": {
-    "submit": "Nộp bài",
-    "resultTitle": "Kết quả bài thi",
-    "score": "Điểm",
-    "correctCount": "Số câu đúng",
-    "retryOld": "Thi lại câu hỏi cũ",
-    "retryNew": "Thi lại với câu hỏi mới",
-    "noQuestion": "Không có câu hỏi nào",
-    "sidebarTitle": "Nhận câu hỏi",
-    "questionCount": "Số lượng câu hỏi",
-    "random": "Random"
-  }
+        "submit": "Nộp bài",
+        "resultTitle": "Kết quả bài thi",
+        "score": "Điểm",
+        "correctCount": "Số câu đúng",
+        "retryOld": "Thi lại câu hỏi cũ",
+        "retryNew": "Thi lại với câu hỏi mới",
+        "noQuestion": "Không có câu hỏi nào",
+        "sidebarTitle": "Nhận câu hỏi",
+        "questionCount": "Số lượng câu hỏi",
+        "random": "Random"
+    },
+    "questionCancelDialog": {
+        "cancel": "Hủy",
+        "ok": "Ok"
+    },
+    "deleteQuestionDialog": {
+        "title": "Xóa câu hỏi",
+        "message": "Bạn có chắc chắn muốn xóa câu hỏi này"
+    }
 }

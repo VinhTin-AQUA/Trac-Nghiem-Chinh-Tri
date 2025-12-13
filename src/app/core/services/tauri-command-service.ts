@@ -10,6 +10,8 @@ export class TauriCommandService {
     public static readonly ADD_ANSWERS_COMMAND = 'add_answers';
     public static readonly GET_ALL_QUESTIONS_COMMAND = 'get_all_questions';
     public static readonly GET_ANSWERS_BY_QUESTION_ID_COMMAND = 'get_answers_by_question_id';
+    public static readonly DELETE_QUESTION_BY_ID_COMMAND = 'delete_question_by_id';
+    public static readonly DELETE_ANSWERS_BY_QUESTION_ID_COMMAND = 'delete_answers_by_question_id';
 
     constructor(private dialogService: DialogService) {}
 

@@ -35,3 +35,20 @@ pub async fn get_all_questions(state: State<'_, Arc<AppState>>) -> Result<Vec<Qu
 
     r
 }
+
+#[command]
+pub async fn delete_question_by_id(
+    state: State<'_, Arc<AppState>>,
+    question_id: i64,
+) -> Result<bool, String> {
+    let question_service = &state.question_service;
+
+    let r = question_service
+        .lock()
+        .await
+        .delete_question_by_id(question_id)
+        .await
+        .map_err(|e| e.to_string());
+
+    r
+}

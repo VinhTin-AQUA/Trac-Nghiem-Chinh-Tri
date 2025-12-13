@@ -7,10 +7,11 @@ import { TauriCommandService } from '../../core/services/tauri-command-service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Question } from '../../core/models/question';
 import { Answer } from '../../core/models/answer';
+import { QuestionCancelDialog } from '../../shared/components/question-cancel-dialog/question-cancel-dialog';
 
 @Component({
     selector: 'app-question-bank',
-    imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
+    imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, QuestionCancelDialog],
     templateUrl: './question-bank.html',
     styleUrl: './question-bank.css',
 })
@@ -20,6 +21,8 @@ export class QuestionBank {
     searchTerm = '';
     showDetail = false;
     selectedQuestion = signal<Question | null>(null);
+    isShowQuestionDialog = signal<boolean>(false);
+    questionIdToDelete: number | null = null;
 
     constructor(private tauriCommandService: TauriCommandService) {}
 
@@ -52,9 +55,43 @@ export class QuestionBank {
         this.showDetail = true;
     }
 
-    delete(q: Question) {
-        if (confirm('Bạn có chắc muốn xóa câu hỏi này?')) {
-            this.questions.set(this.questions().filter((x) => x.id !== q.id));
+    onShowDelete(q: Question) {
+        this.isShowQuestionDialog.set(true);
+        this.questionIdToDelete = q.id;
+    }
+
+    async onShowQuestionDialogClose(result: boolean) {
+        this.isShowQuestionDialog.set(false);
+
+        if (!result) {
+            this.questionIdToDelete = null;
+            return;
+        }
+
+        if (!this.questionIdToDelete) {
+            return;
+        }
+
+        const r1 = await this.tauriCommandService.invokeCommand<boolean>(
+            TauriCommandService.DELETE_QUESTION_BY_ID_COMMAND,
+            {
+                questionId: this.questionIdToDelete,
+            }
+        );
+
+        const r2 = await this.tauriCommandService.invokeCommand<boolean>(
+            TauriCommandService.DELETE_ANSWERS_BY_QUESTION_ID_COMMAND,
+            {
+                questionId: this.questionIdToDelete,
+            }
+        );
+
+        if (r1 && r2) {
+            this.questions.update((questions) =>
+                questions.filter((q) => q.id !== this.questionIdToDelete)
+            );
+
+            this.questionIdToDelete = null;
         }
     }
 }

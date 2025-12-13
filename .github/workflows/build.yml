@@ -84,9 +84,8 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  $release = gh release view $env:TAG_NAME --json id 2>$null || $null
-
-                  if ($release) {
+                  gh release view $env:TAG_NAME 2>$null
+                  if ($LASTEXITCODE -eq 0) {
                     gh release delete $env:TAG_NAME -y
                     Write-Host "Deleted release for tag $env:TAG_NAME"
                   } else {
