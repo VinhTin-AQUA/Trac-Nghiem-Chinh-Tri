@@ -56,9 +56,8 @@ jobs:
 
             - name: Rename exe file
               run: |
-                  $oldPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/app.exe"
-                  $newPath = "./src-tauri/target/x86_64-pc-windows-msvc/release/${{ env.EXE_FILE_NAME }}"
-                  Rename-Item -Path $oldPath -NewName $newPath
+                  $dir = "./src-tauri/target/x86_64-pc-windows-msvc/release/"
+                  Rename-Item -Path "$dir/app.exe" -NewName "${{ env.EXE_FILE_NAME }}"
               shell: powershell
 
             - name: Remove old tag if exists
@@ -67,8 +66,6 @@ jobs:
                   $tags = git ls-remote --tags origin | ForEach-Object { $_.Split("`t")[1] }
                   if ($tags -contains "refs/tags/$tag") {
                       Write-Host "Deleting old tag..."
-                      Write-Host "${{ github.workspace }}"
-                     
                       git push origin :refs/tags/$tag
                   } else {
                       Write-Host "No old tag found."
