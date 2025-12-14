@@ -55,3 +55,34 @@ pub async fn delete_answers_by_question_id(
 
     r
 }
+
+#[command]
+pub async fn delete_answer_by_id(state: State<'_, Arc<AppState>>, id: i64) -> Result<bool, String> {
+    let question_service = &state.answer_service;
+
+    let r = question_service
+        .lock()
+        .await
+        .delete_answer_by_id(id)
+        .await
+        .map_err(|e| e.to_string());
+
+    r
+}
+
+#[command]
+pub async fn update_answers(
+    state: State<'_, Arc<AppState>>,
+    answers: Vec<Answer>,
+) -> Result<bool, String> {
+    let question_service = &state.answer_service;
+
+    let r = question_service
+        .lock()
+        .await
+        .update_answers(answers)
+        .await
+        .map_err(|e| e.to_string());
+
+    r
+}

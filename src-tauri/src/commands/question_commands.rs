@@ -52,3 +52,22 @@ pub async fn delete_question_by_id(
 
     r
 }
+
+
+#[command]
+pub async fn update_question_by_id(
+    state: State<'_, Arc<AppState>>,
+    question: Question
+) -> Result<bool, String> {
+    let question_service = &state.question_service;
+
+    let r = question_service
+        .lock()
+        .await
+        .update_question_by_id(question)
+        .await
+        .map_err(|e| e.to_string());
+
+    r
+}
+

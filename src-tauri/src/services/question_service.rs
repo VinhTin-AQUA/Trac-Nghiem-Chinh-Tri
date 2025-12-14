@@ -64,4 +64,20 @@ impl QuestionService {
 
         Ok(true)
     }
+
+    pub async fn update_question_by_id(&self, question: Question) -> Result<bool> {
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        conn.execute("
+                UPDATE questions
+                SET content = (?1)
+                WHERE id = (?2);
+            ", 
+            [question.content, question.id.to_string()])
+            .await?;
+
+        Ok(true)
+    }
+
 }

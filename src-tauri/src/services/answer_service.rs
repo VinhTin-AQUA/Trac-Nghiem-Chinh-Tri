@@ -76,4 +76,50 @@ impl AnswerService {
 
         Ok(true)
     }
+
+    pub async fn delete_answer_by_id(&self, id: i64) -> Result<bool> {
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        conn.execute("DELETE FROM answers WHERE id = (?1);", [id])
+            .await?;
+
+        Ok(true)
+    }
+
+    pub async fn update_answers(&self, answers: Vec<Answer>) -> Result<bool> {
+        let mut db = self.db.lock().await;
+        let conn = db.get_connection_mut().await;
+        let tx = conn.transaction().await?;
+
+        let result = async {
+            for ans in answers {
+                let is_correct_str = if ans.is_correct { "1" } else { "0" };
+
+                tx.execute(
+                    "
+                UPDATE answers
+                SET content = ?1,
+                    is_correct = ?2
+                WHERE id = ?3;
+                ",
+                    [ans.content, is_correct_str.to_string(), ans.id.to_string()],
+                )
+                .await?;
+            }
+            Ok::<(), anyhow::Error>(())
+        }
+        .await;
+
+        match result {
+            Ok(_) => {
+                tx.commit().await?;
+                Ok(true)
+            }
+            Err(e) => {
+                tx.rollback().await?;
+                Err(e)
+            }
+        }
+    }
 }

@@ -50,7 +50,10 @@ pub fn run() {
             get_all_questions,
             get_answers_by_question_id,
             delete_question_by_id,
-            delete_answers_by_question_id
+            delete_answers_by_question_id,
+            delete_answer_by_id,
+            update_question_by_id,
+            update_answers
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
