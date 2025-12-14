@@ -55,6 +55,34 @@ impl QuestionService {
         Ok(questions)
     }
 
+    pub async fn get_question_by_id(&self, question_id: i64) -> Result<Question> {
+        let sql = "SELECT id, content FROM questions where id = (?1);";
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        let mut rows = conn
+            .query(sql, [question_id])
+            .await
+            .map_err(|e| anyhow!("Query failed: {}", e))?;
+
+        let mut questions: Vec<Question> = Vec::new();
+
+        // doc ket qua
+        while let Some(row) = rows.next().await? {
+            questions.push(Question {
+                id: row.get::<i64>(0).unwrap_or(0),
+                content: row.get::<String>(1).unwrap_or("".to_string()),
+            });
+            break;
+        }
+
+        // Lấy phần tử đầu tiên
+        questions
+            .into_iter()
+            .next()
+            .ok_or_else(|| anyhow::anyhow!("Không tìm thấy câu hỏi với id {}", question_id))
+    }
+
     pub async fn delete_question_by_id(&self, question_id: i64) -> Result<bool> {
         let db = self.db.lock().await;
         let conn = db.get_connection().await;
@@ -69,15 +97,16 @@ impl QuestionService {
         let db = self.db.lock().await;
         let conn = db.get_connection().await;
 
-        conn.execute("
+        conn.execute(
+            "
                 UPDATE questions
                 SET content = (?1)
                 WHERE id = (?2);
-            ", 
-            [question.content, question.id.to_string()])
-            .await?;
+            ",
+            [question.content, question.id.to_string()],
+        )
+        .await?;
 
         Ok(true)
     }
-
 }

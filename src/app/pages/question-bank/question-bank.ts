@@ -8,7 +8,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Question } from '../../core/models/question';
 import { Answer } from '../../core/models/answer';
 import { QuestionCancelDialog } from '../../shared/components/question-cancel-dialog/question-cancel-dialog';
-import { EditQuestionStore } from '../../shared/stores/edit-question.store';
 
 @Component({
     selector: 'app-question-bank',
@@ -24,7 +23,6 @@ export class QuestionBank {
     selectedQuestion = signal<Question | null>(null);
     isShowQuestionDialog = signal<boolean>(false);
     questionIdToDelete: number | null = null;
-    editQuestion = EditQuestionStore;
 
     constructor(private tauriCommandService: TauriCommandService, private router: Router) {}
 
@@ -98,8 +96,6 @@ export class QuestionBank {
     }
 
     onEditQuetion(q: Question) {
-        this.editQuestion.question = q;
-        this.editQuestion.answers = q.answers;
-        this.router.navigateByUrl(`/${MainRoutes.EDIT_QUESTION}`);
+        this.router.navigateByUrl(`/${MainRoutes.EDIT_QUESTION}/${q.id}`);
     }
 }

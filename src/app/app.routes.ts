@@ -30,7 +30,7 @@ export const routes: Routes = [
                 component: AddQuestion,
             },
             {
-                path: MainRoutes.EDIT_QUESTION,
+                path: MainRoutes.EDIT_QUESTION + '/:id',
                 component: EditQuestion,
             },
             {

@@ -5,10 +5,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { AddNewAnswer } from '../add-question/models/add-new-answer';
 import { ToastStore } from '../../shared/stores/toast.store';
 import { TauriCommandService } from '../../core/services/tauri-command-service';
-import { EditQuestionStore } from '../../shared/stores/edit-question.store';
 import { Answer } from '../../core/models/answer';
 import { Question } from '../../core/models/question';
 import { UpdateQuestion } from './models/update-question';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-edit-question',
@@ -22,17 +22,50 @@ export class EditQuestion {
     oldAnswers = signal<Answer[]>([]);
 
     toastStore = ToastStore;
-    editQuestion = EditQuestionStore;
 
-    constructor(private tauriCommandService: TauriCommandService) {}
+    constructor(
+        private tauriCommandService: TauriCommandService,
+        private activatedRoute: ActivatedRoute
+    ) {}
 
     // them, sua, xoa answer moi
     // them sua xoa answer cu
 
     ngOnInit() {
-        this.question.set(this.editQuestion.question);
-        this.oldAnswers.set(this.editQuestion.answers);
+        this.activatedRoute.params.subscribe({
+            next: async (params: any) => {
+                console.log(params.id); // {id: '2', name: 'hoc'}
+                const questionId = Number(params.id);
+
+                await this.getQuestionById(questionId);
+                await this.getAnswersByQuestionId(questionId);
+            },
+        });
     }
+
+    private async getQuestionById(questionId: number) {
+        const question = await this.tauriCommandService.invokeCommand<Question>(
+            TauriCommandService.GET_QUESTION_BY_ID_COMMAND,
+            { questionId: questionId }
+        );
+
+        if (question) {
+            this.question.set(question);
+        }
+    }
+
+    private async getAnswersByQuestionId(questionId: number) {
+        const answers = await this.tauriCommandService.invokeCommand<Answer[]>(
+            TauriCommandService.GET_ANSWERS_BY_QUESTION_ID_COMMAND,
+            { questionId: questionId }
+        );
+
+        if (answers) {
+            this.oldAnswers.set(answers);
+        }
+    }
+
+    //==============================
 
     updateQuestionContent(content: string) {
         this.question.update((q) => (q ? { ...q, content } : q));
@@ -68,7 +101,7 @@ export class EditQuestion {
     //===============\
 
     markCorrectOldAnswer(answerId: number) {
-        this.newAnswers.update((answers) =>
+        this.oldAnswers.update((answers) =>
             answers.map((a) => ({
                 ...a,
                 is_correct: a.id === answerId,
@@ -78,14 +111,13 @@ export class EditQuestion {
 
     async removeOldAnswer(answerId: number) {
         const r = await this.tauriCommandService.invokeCommand<boolean>(
-            TauriCommandService.DELETE_QUESTION_BY_ID_COMMAND,
+            TauriCommandService.DELETE_ANSWER_BY_ID_COMMAND,
             { id: answerId }
         );
 
         if (!r) {
             return;
         }
-
         this.oldAnswers.update((answers) => answers.filter((a) => a.id !== answerId));
     }
 
