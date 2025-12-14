@@ -92,6 +92,12 @@ jobs:
                     echo "Release for tag $TAG_NAME does not exist"
                   fi
 
+            - name: List files for debugging
+              run: |
+                  ls -la ./src-tauri/target/x86_64-pc-windows-msvc/release/
+                  # Hoặc cho Windows runner
+                  dir ./src-tauri/target/x86_64-pc-windows-msvc/release/
+
             - name: Publish
               uses: softprops/action-gh-release@v1
               with:
