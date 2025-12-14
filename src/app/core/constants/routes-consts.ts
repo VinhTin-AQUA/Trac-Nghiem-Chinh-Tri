@@ -8,4 +8,5 @@ export const MainRoutes = {
     SETTINGS: 'settings',
     QUESTION_BANK: 'question-bank',
     ADD_QUESTION: 'add-question',
+    EDIT_QUESTION: 'edit-question',
 } as const;

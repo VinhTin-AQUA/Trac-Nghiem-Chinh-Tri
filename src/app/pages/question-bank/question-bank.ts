@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MainRoutes } from '../../core/constants/routes-consts';
-import { RouterLink } from '@angular/router';
+import { LayoutRoutes, MainRoutes } from '../../core/constants/routes-consts';
+import { Router, RouterLink } from '@angular/router';
 import { TauriCommandService } from '../../core/services/tauri-command-service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Question } from '../../core/models/question';
@@ -24,7 +24,7 @@ export class QuestionBank {
     isShowQuestionDialog = signal<boolean>(false);
     questionIdToDelete: number | null = null;
 
-    constructor(private tauriCommandService: TauriCommandService) {}
+    constructor(private tauriCommandService: TauriCommandService, private router: Router) {}
 
     async ngOnInit() {
         let questions = await this.tauriCommandService.invokeCommand<Question[]>(
@@ -93,5 +93,9 @@ export class QuestionBank {
 
             this.questionIdToDelete = null;
         }
+    }
+
+    onEditQuetion(q: Question) {
+        this.router.navigateByUrl(`/${MainRoutes.EDIT_QUESTION}/${q.id}`);
     }
 }

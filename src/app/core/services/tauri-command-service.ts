@@ -12,6 +12,11 @@ export class TauriCommandService {
     public static readonly GET_ANSWERS_BY_QUESTION_ID_COMMAND = 'get_answers_by_question_id';
     public static readonly DELETE_QUESTION_BY_ID_COMMAND = 'delete_question_by_id';
     public static readonly DELETE_ANSWERS_BY_QUESTION_ID_COMMAND = 'delete_answers_by_question_id';
+    public static readonly DELETE_ANSWER_BY_ID_COMMAND = 'delete_answer_by_id';
+    public static readonly UPDATE_QUESTION_BY_ID_COMMAND = 'update_question_by_id';
+    public static readonly UPDATE_ANSWERS_COMMAND = 'update_answers';
+    public static readonly GET_QUESTION_BY_ID_COMMAND = 'get_question_by_id';
+
 
     constructor(private dialogService: DialogService) {}
 

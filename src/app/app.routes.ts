@@ -6,6 +6,7 @@ import { StartExam } from './pages/start-exam/start-exam';
 import { QuestionBank } from './pages/question-bank/question-bank';
 import { AddQuestion } from './pages/add-question/add-question';
 import { Settings } from './pages/settings/settings';
+import { EditQuestion } from './pages/edit-question/edit-question';
 
 export const routes: Routes = [
     {
@@ -27,6 +28,10 @@ export const routes: Routes = [
             {
                 path: MainRoutes.ADD_QUESTION,
                 component: AddQuestion,
+            },
+            {
+                path: MainRoutes.EDIT_QUESTION + '/:id',
+                component: EditQuestion,
             },
             {
                 path: MainRoutes.SETTINGS,
