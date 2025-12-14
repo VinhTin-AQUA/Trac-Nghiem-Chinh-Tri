@@ -14,12 +14,12 @@ export class ToastStore {
         this.message.set(message);
 
         if (isShow === true) {
-			this.timeoutId = setTimeout(() => this.isShow.set(false), 3500);
-		} else {
-			if (this.timeoutId) {
-				clearTimeout(this.timeoutId);
-				this.timeoutId = null;
-			}
-		}
+            this.timeoutId = setTimeout(() => this.isShow.set(false), 3500);
+        } else {
+            if (this.timeoutId) {
+                clearTimeout(this.timeoutId);
+                this.timeoutId = null;
+            }
+        }
     }
 }

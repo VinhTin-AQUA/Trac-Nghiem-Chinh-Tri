@@ -92,6 +92,13 @@ export class EditQuestion {
                 is_correct: a.id === answerId,
             }))
         );
+
+        this.oldAnswers.update((answers) =>
+            answers.map((a) => ({
+                ...a,
+                is_correct: false,
+            }))
+        );
     }
 
     removeNewAnswer(answerId: number) {
@@ -105,6 +112,13 @@ export class EditQuestion {
             answers.map((a) => ({
                 ...a,
                 is_correct: a.id === answerId,
+            }))
+        );
+
+        this.newAnswers.update((answers) =>
+            answers.map((a) => ({
+                ...a,
+                is_correct: false,
             }))
         );
     }

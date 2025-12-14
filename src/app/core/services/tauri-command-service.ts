@@ -16,7 +16,8 @@ export class TauriCommandService {
     public static readonly UPDATE_QUESTION_BY_ID_COMMAND = 'update_question_by_id';
     public static readonly UPDATE_ANSWERS_COMMAND = 'update_answers';
     public static readonly GET_QUESTION_BY_ID_COMMAND = 'get_question_by_id';
-
+    public static readonly GET_TOTAL_QUESTIONS_COMMAND = 'get_total_questions';
+    public static readonly GET_RANDOM_QUESTIONS_COMMAND = 'get_random_questions';
 
     constructor(private dialogService: DialogService) {}
 

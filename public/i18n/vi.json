@@ -13,7 +13,9 @@
         "answerList": "Danh sách đáp án",
         "answerContent": "Nội dung đáp án",
         "addAnswer": "Thêm đáp án",
-        "saveQuestion": "Lưu câu hỏi"
+        "saveQuestion": "Lưu câu hỏi",
+        "addQuestion": "Thêm câu hỏi",
+        "questionContent": "Nội dung câu hỏi"
     },
     "home": {
         "homeTitle1": "Thi trắc nghiệm – Bộ câu hỏi tổng hợp",
@@ -61,5 +63,9 @@
     "deleteQuestionDialog": {
         "title": "Xóa câu hỏi",
         "message": "Bạn có chắc chắn muốn xóa câu hỏi này"
+    },
+    "editQuestion": {
+        "updateQuestion": "Cập nhật câu hỏi",
+        "questionContent": "Nội dung câu hỏi"
     }
 }

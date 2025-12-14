@@ -109,4 +109,49 @@ impl QuestionService {
 
         Ok(true)
     }
+
+    pub async fn get_total_questions(&self) -> Result<i64> {
+        let sql = "SELECT COUNT(*) FROM  questions;";
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        // Thực hiện query và lấy số lượng bản ghi
+        let mut rows = conn
+            .query(sql, [0])
+            .await
+            .map_err(|e| anyhow!("Query failed: {}", e))?;
+
+        let mut count: i64 = 0;
+
+        // doc ket qua
+        while let Some(row) = rows.next().await? {
+            count = row.get::<i64>(0).unwrap_or(0);
+            break;
+        }
+
+        Ok(count)
+    }
+
+    pub async fn get_random_questions(&self, rand: i64) -> Result<Vec<Question>> {
+        let sql = "SELECT id, content FROM questions ORDER BY RANDOM() LIMIT (?1)";
+        let db = self.db.lock().await;
+        let conn = db.get_connection().await;
+
+        let mut rows = conn
+            .query(sql, [rand])
+            .await
+            .map_err(|e| anyhow!("Query failed: {}", e))?;
+
+        let mut questions: Vec<Question> = Vec::new();
+
+        // doc ket qua
+        while let Some(row) = rows.next().await? {
+            questions.push(Question {
+                id: row.get::<i64>(0).unwrap_or(0),
+                content: row.get::<String>(1).unwrap_or("".to_string()),
+            });
+        }
+
+        Ok(questions)
+    }
 }
