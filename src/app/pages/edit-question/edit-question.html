@@ -1,8 +1,7 @@
 <div class="max-w-5xl mx-auto p-6 bg-white shadow rounded">
-    <h2 class="text-xl font-bold mb-4">Thêm câu hỏi</h2>
+    <h2 class="text-xl font-bold mb-4">{{ 'editQuestion.updateQuestion' | translate }}</h2>
 
-    <!-- Nội dung câu hỏi -->
-    <label class="block mb-2 font-medium">Nội dung câu hỏi</label>
+    <label class="block mb-2 font-medium">{{ 'editQuestion.questionContent' | translate }}</label>
     <textarea
         [ngModel]="question()?.content"
         (ngModelChange)="updateQuestionContent($event)"
@@ -10,7 +9,6 @@
         rows="4"
         [placeholder]="'add-question.inputQuestion' | translate"
     ></textarea>
-    ts Copy code
 
     <!-- Danh sách đáp án -->
     <h3 class="font-medium mb-2">{{ 'add-question.answerList' | translate }}</h3>
@@ -41,9 +39,7 @@
             X</button
         >}
     </div>
-    }
-
-    @for (ans of newAnswers(); track $index) {
+    } @for (ans of newAnswers(); track $index) {
     <div class="flex gap-3 mb-3 items-center">
         <!-- Radio chọn đáp án đúng -->
         <input

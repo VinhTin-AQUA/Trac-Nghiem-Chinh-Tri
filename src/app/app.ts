@@ -4,7 +4,7 @@ import { LanguageService } from './core/services/language-service';
 import { Loader } from './shared/components/loader/loader';
 import { DialogService } from './core/services/dialog-service';
 import { ToastStore } from './shared/stores/toast.store';
-import { Toast } from "./shared/components/toast/toast";
+import { Toast } from './shared/components/toast/toast';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +14,7 @@ import { Toast } from "./shared/components/toast/toast";
 })
 export class App {
     protected readonly title = signal('Trac-Nghiem-Chinh-Tri');
-    toastStore = ToastStore
+    toastStore = ToastStore;
 
     constructor(private languageService: LanguageService, public dialogService: DialogService) {}
 }

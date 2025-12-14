@@ -10,6 +10,7 @@
         </p>
 
         <button
+            [routerLink]="'/' + mainbRoutes.START_EXAM"
             class="px-8 py-3 text-lg bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg transition"
         >
             {{ 'home.startExam' | translate }}
@@ -17,20 +18,15 @@
     </section>
 
     <!-- STATISTIC BOXES -->
-    <section class="max-w-6xl mx-auto py-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+    <section class="max-w-6xl mx-auto py-16 grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
         <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
-            <h3 class="text-3xl font-bold text-blue-600">1500</h3>
+            <h3 class="text-3xl font-bold text-blue-600">{{ totalQuestions() }}</h3>
             <p class="text-gray-600 mt-2">{{ 'home.questionInBank' | translate }}</p>
         </div>
 
         <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
-            <h3 class="text-3xl font-bold text-blue-600">20</h3>
+            <h3 class="text-3xl font-bold text-blue-600">{{ totalQuestionsPerExam() }}</h3>
             <p class="text-gray-600 mt-2">{{ 'home.totalQuestionPerTest' | translate }}</p>
-        </div>
-
-        <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
-            <h3 class="text-3xl font-bold text-blue-600">10 phút</h3>
-            <p class="text-gray-600 mt-2">{{ 'home.timePerTest' | translate }}</p>
         </div>
     </section>
 </div>

@@ -86,3 +86,34 @@ pub async fn get_question_by_id(
 
     r
 }
+
+#[command]
+pub async fn get_total_questions(state: State<'_, Arc<AppState>>) -> Result<i64, String> {
+    let question_service = &state.question_service;
+
+    let r = question_service
+        .lock()
+        .await
+        .get_total_questions()
+        .await
+        .map_err(|e| e.to_string());
+
+    r
+}
+
+#[command]
+pub async fn get_random_questions(
+    state: State<'_, Arc<AppState>>,
+    rand: i64,
+) -> Result<Vec<Question>, String> {
+    let question_service = &state.question_service;
+
+    let r = question_service
+        .lock()
+        .await
+        .get_random_questions(rand)
+        .await
+        .map_err(|e| e.to_string());
+
+    r
+}

@@ -6,7 +6,7 @@ import { inject, Injectable, signal } from '@angular/core';
 export class DialogService {
     isShowLoadingDialog = signal<boolean>(false);
 
-	showLoadingDialog(flag: boolean) {
-		this.isShowLoadingDialog.set(flag);
-	}
+    showLoadingDialog(flag: boolean) {
+        this.isShowLoadingDialog.set(flag);
+    }
 }

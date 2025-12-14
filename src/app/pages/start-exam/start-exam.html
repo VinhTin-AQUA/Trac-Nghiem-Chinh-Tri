@@ -2,28 +2,27 @@
     <div class="mx-auto grid grid-cols-12 gap-6 px-6">
         <!-- DANH SÁCH CÂU HỎI -->
         <div class="col-span-9">
-            @if (questions.length > 0) {
+            @if (questions().length > 0) {
             <div class="mx-auto">
                 <form>
-                    @for (q of questions; track $index) {
+                    @for (q of questions(); track $index) {
                     <div class="mb-6 p-5 border rounded-xl shadow-sm bg-white">
-                        <!-- Question text -->
                         <p class="font-semibold text-lg mb-3">{{ q.content }}</p>
 
-                        <!-- ANSWERS -->
                         @for (a of q.answers; track $index) {
                         <label
                             class="flex items-center gap-3 p-2 mb-2 rounded cursor-pointer transition"
                             [ngClass]="{
                                 'bg-green-300': submitted && a.is_correct,
-                                'bg-red-300': submitted && q.id === a.id && !a.is_correct
+                                'bg-red-300':
+                                    submitted && selectedAnswers[q.id] === a.id && !a.is_correct
                             }"
                         >
                             <input
                                 type="radio"
                                 [name]="'q' + q.id"
                                 [value]="a.id"
-                                [(ngModel)]="q.id"
+                                [(ngModel)]="selectedAnswers[q.id]"
                                 [disabled]="submitted"
                                 class="h-4 w-4"
                             />
@@ -31,10 +30,7 @@
                         </label>
                         }
                     </div>
-                    }
-
-                    <!-- SUBMIT -->
-                    @if (!submitted) {
+                    } @if (!submitted) {
                     <button
                         type="button"
                         class="px-6 py-3 btn-primary text-lg mt-4"
@@ -60,10 +56,10 @@
                     <p class="text-gray-700">
                         {{ 'startExam.correctCount' | translate }}:
                         <strong class="text-green-600">{{ correctCount }}</strong>
-                        / {{ questions.length }}
+                        / {{ questions().length }}
                     </p>
 
-                    <div class="grid grid-cols-2 gap-4 mt-4">
+                    <!-- <div class="grid grid-cols-2 gap-4 mt-4">
                         <button class="w-full p-3 btn-primary">
                             {{ 'startExam.retryOld' | translate }}
                         </button>
@@ -71,7 +67,7 @@
                         <button class="w-full p-3 btn-primary">
                             {{ 'startExam.retryNew' | translate }}
                         </button>
-                    </div>
+                    </div> -->
                 </div>
                 }
             </div>
@@ -93,10 +89,15 @@
                 <label class="font-medium text-gray-700">
                     {{ 'startExam.questionCount' | translate }}
                 </label>
-                <input type="number" class="mt-1 w-full border rounded-lg p-2" />
+                <input
+                    type="number"
+                    class="mt-1 w-full border rounded-lg p-2"
+                    [ngModel]="totalQuestionPerExam()"
+                    (ngModelChange)="onInputTotalQuestionPerExam($event)"
+                />
             </div>
 
-            <button class="w-full p-3 btn-primary text-lg">
+            <button (click)="onRandomQuestions()" class="w-full p-3 btn-primary text-lg">
                 {{ 'startExam.random' | translate }}
             </button>
         </div>
