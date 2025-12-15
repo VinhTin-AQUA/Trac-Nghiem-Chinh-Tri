@@ -83,7 +83,7 @@ export class StartExam {
             }
         }
 
-        const totalQuestions = this.questions.length;
+        const totalQuestions = this.questions().length;
 
         // Bảo vệ chia cho 0
         if (totalQuestions > 0) {

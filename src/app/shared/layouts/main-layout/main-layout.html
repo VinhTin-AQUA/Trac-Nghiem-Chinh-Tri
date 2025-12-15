@@ -1,15 +1,15 @@
-<div class="layout font-sans">
-    <!-- Header -->
+<div class="layout font-sans bg-zinc-100">
+    <!-- Header (macOS Titlebar) -->
     <header
-        class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-white backdrop-blur-xl border-b border-gray-200 shadow-sm"
+        class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white/80 backdrop-blur-xl border-b border-zinc-200/70 shadow-sm"
     >
         <div class="flex items-center gap-3">
             <button
                 (click)="toggleDrawer()"
-                class="p-2 rounded-lg hover:bg-gray-100 active:scale-95 transition"
+                class="p-2 rounded-lg text-zinc-600 hover:bg-zinc-200/60 active:scale-95 transition"
             >
                 <svg
-                    class="w-6 h-6 text-gray-700"
+                    class="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
@@ -19,27 +19,12 @@
                 </svg>
             </button>
 
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <!-- ⚡ -->
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M18.3139 22C16.9916 22 15.9337 21.5372 15.1073 20.6116C14.1156 20.9421 13.0577 21.1405 11.9668 21.1405C6.71061 21.1405 2.41309 16.843 2.41309 11.5537C2.44614 6.26446 6.71061 2 11.9999 2C17.2891 2 21.5866 6.29752 21.5866 11.5537C21.5866 14.3967 20.7271 16.5455 18.8759 18.1983C19.2065 18.3967 19.6362 18.6281 19.9999 18.7603C20.2643 18.8595 20.4627 19.157 20.4627 19.4545V21.1405C20.4627 21.5372 20.1652 21.8678 19.7685 21.8678C19.5701 21.9008 18.6114 22 18.3139 22ZM15.3387 18.9587C15.5701 18.9587 15.8015 19.0579 15.9337 19.2562C16.3635 19.8512 16.9916 20.4793 18.3139 20.4793C18.4131 20.4793 18.6445 20.4793 18.942 20.4463V19.9174C18.347 19.6529 17.5205 19.157 17.1569 18.595C17.0908 18.4959 17.0577 18.3967 17.0247 18.2975C16.9585 17.8678 17.2561 17.6033 17.6528 17.2397C19.3056 15.8182 20.066 14.0661 20.066 11.5207C20.066 7.05785 16.4296 3.45455 11.9668 3.45455C7.53705 3.4876 3.93375 7.09091 3.93375 11.5537C3.93375 16.0165 7.53705 19.6529 11.9999 19.6529C13.0908 19.6529 14.1156 19.4545 15.0742 19.0579C15.1734 18.9917 15.2726 18.9587 15.3387 18.9587Z"
-                            fill="#323544"
-                        />
-                        <path
-                            d="M12.0989 18.6282C9.61954 18.6282 7.60301 16.6116 7.60301 14.1323V8.94223C7.60301 6.46289 9.61954 4.44636 12.0989 4.44636C13.289 4.44636 14.446 4.94223 15.2724 5.76867C16.0989 6.59512 16.5617 7.71909 16.5617 8.94223C16.5286 14.8596 16.4625 15.124 16.4295 15.2232C16.3633 15.4877 16.1981 15.686 15.9666 15.7521C15.7352 15.8513 15.4708 15.7852 15.2394 15.653C14.9419 15.4216 13.884 15.124 12.8262 14.8926V15.4216C13.3881 15.7191 14.3468 16.248 14.8096 16.6447C14.9749 16.81 15.0741 17.0083 15.041 17.2397C15.041 17.4712 14.9088 17.6695 14.7435 17.8017C13.9832 18.3307 13.0245 18.6282 12.0989 18.6282ZM12.0989 5.93396C10.446 5.93396 9.09061 7.28934 9.09061 8.94223V14.1323C9.09061 15.7852 10.446 17.1406 12.0989 17.1406C12.3633 17.1406 12.5947 17.1075 12.8262 17.0414C12.4625 16.8431 12.0658 16.6117 11.7683 16.4794C11.5038 16.3472 11.3385 16.0827 11.3385 15.8183V13.967C11.3385 13.7356 11.4377 13.5373 11.603 13.405C11.7683 13.2728 11.9997 13.2067 12.1981 13.2397C12.6939 13.3389 13.9501 13.5703 14.9749 13.9009C15.008 12.6117 15.008 10.4298 15.041 8.90917C15.041 8.11578 14.7435 7.35545 14.1485 6.79347C13.6526 6.23148 12.8923 5.93396 12.0989 5.93396Z"
-                            fill="#323544"
-                        />
-                    </svg>
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-zinc-200/70 flex items-center justify-center">
+                    <img class="w-10" src="/64x64.png" alt="">
                 </div>
-                <h1 class="text-xl font-semibold text-gray-800">
+
+                <h1 class="text-lg font-semibold text-zinc-900 tracking-tight">
                     {{ 'app.title' | translate }}
                 </h1>
             </div>
@@ -48,44 +33,30 @@
 
     <!-- Drawer overlay -->
     @if (isDrawerOpen) {
-    <div class="fixed inset-0 bg-black/30 backdrop-blur-sm z-40" (click)="toggleDrawer()"></div>
+    <div class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" (click)="toggleDrawer()"></div>
     }
 
-    <!-- Sidebar -->
+    <!-- Sidebar (macOS Sidebar) -->
     <nav
-        class="fixed top-0 left-0 z-50 h-screen w-64 bg-white border-r border-gray-200 shadow-lg transform transition-transform duration-300 rounded-r-2xl"
+        class="fixed top-0 left-0 z-50 h-screen w-64 bg-white/90 backdrop-blur-xl border-r border-zinc-200/70 shadow-xl rounded-r-2xl transform transition-transform duration-300"
         [class.translate-x-0]="isDrawerOpen"
         [class.-translate-x-full]="!isDrawerOpen"
     >
-        <div class="flex justify-between items-center p-4 border-b border-gray-200">
+        <div class="flex items-center justify-between p-4 border-b border-zinc-200/70">
             <div class="flex items-center gap-3">
-                <div
-                    class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-2xl"
-                >
-                    <!-- ⚡ -->
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M18.3139 22C16.9916 22 15.9337 21.5372 15.1073 20.6116C14.1156 20.9421 13.0577 21.1405 11.9668 21.1405C6.71061 21.1405 2.41309 16.843 2.41309 11.5537C2.44614 6.26446 6.71061 2 11.9999 2C17.2891 2 21.5866 6.29752 21.5866 11.5537C21.5866 14.3967 20.7271 16.5455 18.8759 18.1983C19.2065 18.3967 19.6362 18.6281 19.9999 18.7603C20.2643 18.8595 20.4627 19.157 20.4627 19.4545V21.1405C20.4627 21.5372 20.1652 21.8678 19.7685 21.8678C19.5701 21.9008 18.6114 22 18.3139 22ZM15.3387 18.9587C15.5701 18.9587 15.8015 19.0579 15.9337 19.2562C16.3635 19.8512 16.9916 20.4793 18.3139 20.4793C18.4131 20.4793 18.6445 20.4793 18.942 20.4463V19.9174C18.347 19.6529 17.5205 19.157 17.1569 18.595C17.0908 18.4959 17.0577 18.3967 17.0247 18.2975C16.9585 17.8678 17.2561 17.6033 17.6528 17.2397C19.3056 15.8182 20.066 14.0661 20.066 11.5207C20.066 7.05785 16.4296 3.45455 11.9668 3.45455C7.53705 3.4876 3.93375 7.09091 3.93375 11.5537C3.93375 16.0165 7.53705 19.6529 11.9999 19.6529C13.0908 19.6529 14.1156 19.4545 15.0742 19.0579C15.1734 18.9917 15.2726 18.9587 15.3387 18.9587Z"
-                            fill="#323544"
-                        />
-                        <path
-                            d="M12.0989 18.6282C9.61954 18.6282 7.60301 16.6116 7.60301 14.1323V8.94223C7.60301 6.46289 9.61954 4.44636 12.0989 4.44636C13.289 4.44636 14.446 4.94223 15.2724 5.76867C16.0989 6.59512 16.5617 7.71909 16.5617 8.94223C16.5286 14.8596 16.4625 15.124 16.4295 15.2232C16.3633 15.4877 16.1981 15.686 15.9666 15.7521C15.7352 15.8513 15.4708 15.7852 15.2394 15.653C14.9419 15.4216 13.884 15.124 12.8262 14.8926V15.4216C13.3881 15.7191 14.3468 16.248 14.8096 16.6447C14.9749 16.81 15.0741 17.0083 15.041 17.2397C15.041 17.4712 14.9088 17.6695 14.7435 17.8017C13.9832 18.3307 13.0245 18.6282 12.0989 18.6282ZM12.0989 5.93396C10.446 5.93396 9.09061 7.28934 9.09061 8.94223V14.1323C9.09061 15.7852 10.446 17.1406 12.0989 17.1406C12.3633 17.1406 12.5947 17.1075 12.8262 17.0414C12.4625 16.8431 12.0658 16.6117 11.7683 16.4794C11.5038 16.3472 11.3385 16.0827 11.3385 15.8183V13.967C11.3385 13.7356 11.4377 13.5373 11.603 13.405C11.7683 13.2728 11.9997 13.2067 12.1981 13.2397C12.6939 13.3389 13.9501 13.5703 14.9749 13.9009C15.008 12.6117 15.008 10.4298 15.041 8.90917C15.041 8.11578 14.7435 7.35545 14.1485 6.79347C13.6526 6.23148 12.8923 5.93396 12.0989 5.93396Z"
-                            fill="#323544"
-                        />
-                    </svg>
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center">
+                    <img class="w-10" src="/64x64.png" alt="">
                 </div>
-                <h2 class="text-lg font-semibold text-gray-800">Menu</h2>
+
+                <h2 class="text-sm font-semibold text-zinc-900">Menu</h2>
             </div>
 
-            <button (click)="toggleDrawer()" class="p-2 hover:bg-gray-100 rounded-lg transition">
+            <button
+                (click)="toggleDrawer()"
+                class="p-2 rounded-lg text-zinc-500 hover:bg-zinc-200/60 transition"
+            >
                 <svg
-                    class="w-5 h-5 text-gray-700"
+                    class="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
@@ -96,17 +67,17 @@
             </button>
         </div>
 
-        <div class="p-4">
+        <div class="p-3">
             <ul class="space-y-1">
                 @for (item of navItems; track $index) {
                 <li>
                     <a
                         [routerLink]="item.url"
-                        routerLinkActive="bg-blue-200 text-blue-600 font-semibold border-l-4 border-blue-500"
+                        routerLinkActive="bg-blue-500/90 text-white font-medium"
                         [routerLinkActiveOptions]="{ exact: true }"
-                        class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition border-l-4 border-transparent"
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm hover:bg-zinc-400/60 transition"
                     >
-                        <span class="text-sm">{{ item.name | translate }}</span>
+                        <span>{{ item.name | translate }}</span>
                     </a>
                 </li>
                 }
@@ -114,8 +85,8 @@
         </div>
     </nav>
 
-    <!-- Main -->
-    <main class="pt- bg-gray-50 min-h-screen">
+    <!-- Main content -->
+    <main class="pt-16 bg-zinc-100 min-h-screen">
         <router-outlet></router-outlet>
     </main>
 </div>
