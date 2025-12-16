@@ -10,7 +10,7 @@
                         class="mb-8 p-6 rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm"
                     >
                         <p class="font-semibold text-lg text-zinc-900 mb-4">
-                            {{ q.content }}
+                            Câu {{ $index + 1 }}: {{ q.content }}
                         </p>
 
                         @for (a of q.answers; track $index) {

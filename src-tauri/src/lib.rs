@@ -15,6 +15,7 @@ use commands::*;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .setup(|app| {
             if cfg!(debug_assertions) {
@@ -56,7 +57,10 @@ pub fn run() {
             update_answers,
             get_question_by_id,
             get_total_questions,
-            get_random_questions
+            get_random_questions,
+            expot_json_data,
+            import_json_to_db,
+            delete_all_data
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

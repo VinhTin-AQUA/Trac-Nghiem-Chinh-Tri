@@ -14,3 +14,7 @@ pub mod database_constants {
     pub const DB_NAME: &str = "db.db";
     pub const DB_PATH: &str = "./db/db.db";
 }
+
+pub mod file_name_constants {
+    pub const EXPORT_FILE_NAME: &str = "data.json";
+}

@@ -18,7 +18,10 @@ export class TauriCommandService {
     public static readonly GET_QUESTION_BY_ID_COMMAND = 'get_question_by_id';
     public static readonly GET_TOTAL_QUESTIONS_COMMAND = 'get_total_questions';
     public static readonly GET_RANDOM_QUESTIONS_COMMAND = 'get_random_questions';
-
+    public static readonly EXPOT_JSON_DATA_COMMAND = 'expot_json_data';
+    public static readonly IMPORT_JSON_TO_DB_COMMAND = 'import_json_to_db';
+    public static readonly DELETE_ALL_DATA_COMMAND = 'delete_all_data';
+    
     constructor(private dialogService: DialogService) {}
 
     async invokeCommand<T>(cmd: string, params: any): Promise<T | null> {
