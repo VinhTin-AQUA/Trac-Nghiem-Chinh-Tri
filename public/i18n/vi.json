@@ -54,7 +54,8 @@
         "noQuestion": "Không có câu hỏi nào",
         "sidebarTitle": "Nhận câu hỏi",
         "questionCount": "Số lượng câu hỏi",
-        "random": "Random"
+        "random": "Random",
+        "startExam": "Bắt đầu thi"
     },
     "questionCancelDialog": {
         "cancel": "Hủy",

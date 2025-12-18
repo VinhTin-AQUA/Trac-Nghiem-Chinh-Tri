@@ -1,7 +1,7 @@
-<div class="bg-zinc-100 min-h-screen py-10">
+<div class="bg-zinc-100">
     <div class="mx-auto max-w-7xl grid grid-cols-12 gap-8 px-6">
         <!-- DANH SÁCH CÂU HỎI -->
-        <div class="col-span-9">
+        <div class="col-span-9 max-h-[calc(88vh)] overflow-y-auto pr-4">
             @if (questions().length > 0) {
             <div class="mx-auto">
                 <form>
@@ -28,7 +28,8 @@
                                 [name]="'q' + q.id"
                                 [value]="a.id"
                                 [(ngModel)]="selectedAnswers[q.id]"
-                                [disabled]="submitted"
+                                [readonly]="submitted || isStarted() == false"
+                                (click)="checkStartExam($event)"
                                 class="h-4 w-4 accent-blue-500"
                             />
                             <span class="text-zinc-800">
@@ -37,38 +38,8 @@
                         </label>
                         }
                     </div>
-                    } @if (!submitted) {
-                    <button
-                        type="button"
-                        class="btn-primary mt-6 inline-flex items-center justify-center px-8 py-3 text-base font-medium"
-                        (click)="submit()"
-                    >
-                        {{ 'startExam.submit' | translate }}
-                    </button>
                     }
                 </form>
-
-                <!-- KẾT QUẢ -->
-                @if (submitted) {
-                <div
-                    class="mt-8 p-6 rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm"
-                >
-                    <p class="text-xl font-semibold text-zinc-900 mb-3">
-                        {{ 'startExam.resultTitle' | translate }}
-                    </p>
-
-                    <p class="text-zinc-700">
-                        {{ 'startExam.score' | translate }}:
-                        <strong class="text-blue-500">{{ score }}/10</strong>
-                    </p>
-
-                    <p class="text-zinc-700 mt-1">
-                        {{ 'startExam.correctCount' | translate }}:
-                        <strong class="text-green-500">{{ correctCount }}</strong>
-                        / {{ questions().length }}
-                    </p>
-                </div>
-                }
             </div>
 
             } @else {
@@ -80,13 +51,13 @@
 
         <!-- SIDEBAR CẤU HÌNH -->
         <div
-            class="col-span-3 h-fit rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm p-6"
+            class="col-span-3 h-fit sticky top-6 rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm p-6"
         >
             <h2 class="text-xl font-semibold text-zinc-900 mb-6">
                 {{ 'startExam.sidebarTitle' | translate }}
             </h2>
 
-            <div class="mb-6">
+            <div class="mb-3">
                 <label class="block text-sm font-medium text-zinc-700 mb-1">
                     {{ 'startExam.questionCount' | translate }}
                 </label>
@@ -100,10 +71,68 @@
 
             <button
                 (click)="onRandomQuestions()"
-                class="btn-primary w-full px-4 py-3 text-base font-medium"
+                class="btn-primary w-full px-4 py-3 text-base font-medium mb-3"
             >
                 {{ 'startExam.random' | translate }}
             </button>
+
+            <div class="mb-3">
+                <label class="block text-sm font-medium text-zinc-700 mb-1">
+                    Thời gian làm bài (phút)
+                </label>
+                <input
+                    type="number"
+                    min="1"
+                    class="w-full rounded-xl border border-zinc-300 bg-white/80 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    [ngModel]="examDuration()"
+                    (ngModelChange)="onChangeExamDuration($event)"
+                />
+            </div>
+
+            <div class="sticky top-0 z-10 mb-3 p-4 rounded-xl bg-blue-100 border border-blue-300">
+                ⏱ Thời gian:
+                <strong class="text-blue-600 text-lg">
+                    {{ formattedTime() }}
+                </strong>
+            </div>
+
+            @if (isStarted() === false) {
+            <button
+                type="button"
+                class="btn-primary mb-3 w-full inline-flex items-center justify-center px-8 py-3 text-base font-medium"
+                (click)="startExam()"
+            >
+                {{ 'startExam.startExam' | translate }}
+            </button>
+            } @else if (isStarted() === true) {
+            <button
+                type="button"
+                class="btn-primary mb-3 w-full inline-flex items-center justify-center px-8 py-3 text-base font-medium"
+                (click)="submit()"
+            >
+                {{ 'startExam.submit' | translate }}
+            </button>
+            }
+
+            <!-- KẾT QUẢ -->
+            <div
+                class="p-6 rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm"
+            >
+                <p class="text-xl font-semibold text-zinc-900 mb-3">
+                    {{ 'startExam.resultTitle' | translate }}
+                </p>
+
+                <p class="text-zinc-700">
+                    {{ 'startExam.score' | translate }}:
+                    <strong class="text-blue-500">{{ score }}/10</strong>
+                </p>
+
+                <p class="text-zinc-700 mt-1">
+                    {{ 'startExam.correctCount' | translate }}:
+                    <strong class="text-green-500">{{ correctCount }}</strong>
+                    / {{ questions().length }}
+                </p>
+            </div>
         </div>
     </div>
 </div>
